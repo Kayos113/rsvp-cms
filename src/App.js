@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import React, {useState} from "react";
+import axios from "axios";
 import './App.css';
 
 function App() {
+
+  const [nameArr, setNameArr] = useState([]);
+
+  function getRSVPs() {
+    axios({
+      method: "get",
+      url: "https://hunterknappwedding.herokuapp.com/rsvp",
+      responseType: 'json'
+    })
+    .then( res => {
+      const {data} = res;
+      const namesArr = [];
+      data.forEach( entry => {
+        entry.names.forEach( name => {
+          namesArr.push(name);
+        });
+
+      });
+      console.log(namesArr);
+      setNameArr(namesArr);
+    })
+    .catch( err => {
+      console.log( err );
+    });
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="db-render-pane">
+        <ul>
+          {nameArr}
+        </ul>
+        <button onClick={getRSVPs}>GetRSVPs</button>
+      </div>
     </div>
   );
 }
