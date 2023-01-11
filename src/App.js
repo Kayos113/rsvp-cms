@@ -1,10 +1,11 @@
 import React, {useState} from "react";
+import ListItem from "./components/ListItem";
 import axios from "axios";
 import './App.css';
 
 function App() {
 
-  const [nameArr, setNameArr] = useState([]);
+  const [listArr, setListArr] = useState([]);
 
   function getRSVPs() {
     axios({
@@ -14,15 +15,17 @@ function App() {
     })
     .then( res => {
       const {data} = res;
-      const namesArr = [];
+      const elemArr = [];
       data.forEach( entry => {
-        entry.names.forEach( name => {
-          namesArr.push(name);
-        });
+
+        elemArr.push(<ListItem
+                names={entry.names}
+                radioAnswers={entry.radioAnswers}
+                />);
 
       });
-      console.log(namesArr);
-      setNameArr(namesArr);
+      console.log(elemArr);
+      setListArr(elemArr);
     })
     .catch( err => {
       console.log( err );
@@ -32,8 +35,8 @@ function App() {
   return (
     <div className="App">
       <div className="db-render-pane">
-        <ul>
-          {nameArr}
+        <ul className="main-list">
+          {listArr}
         </ul>
         <button onClick={getRSVPs}>GetRSVPs</button>
       </div>

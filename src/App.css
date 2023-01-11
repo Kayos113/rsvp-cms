@@ -1,3 +1,28 @@
 .App {
   text-align: center;
 }
+
+.main-list {
+}
+.list-item {
+  margin: 0 auto;
+  width: 50%;
+}
+.sub-list {
+  border: 1px solid limegreen;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nested-list {
+  border: 1px solid red;
+  display: inline-block;
+}
+.nested-list>li {
+
+  padding: 1rem 4rem;
+}
+
+.name-list {
+
+}
