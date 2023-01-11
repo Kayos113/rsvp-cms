@@ -16,15 +16,15 @@ function App() {
     .then( res => {
       const {data} = res;
       const elemArr = [];
-      data.forEach( entry => {
+      data.forEach( (entry, index) => {
 
         elemArr.push(<ListItem
                 names={entry.names}
                 radioAnswers={entry.radioAnswers}
+                index={index}
                 />);
 
       });
-      console.log(elemArr);
       setListArr(elemArr);
     })
     .catch( err => {
