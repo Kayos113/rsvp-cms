@@ -1,3 +1,8 @@
+.name-display {
+
+  text-align: center;
+}
+
 .response-name {
   font-size: .66rem;
   text-align: left;
