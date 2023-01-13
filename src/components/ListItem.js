@@ -3,6 +3,9 @@ import check from "../images/check.png";
 import cross from "../images/delete-button.png";
 import pencil from "../images/pencil.png";
 import trash from "../images/bin.png";
+
+import axios from "axios";
+
 import "./css/ListItem.css";
 
 function ListItem(props) {
@@ -34,6 +37,22 @@ function ListItem(props) {
     return responseArr;
   }
 
+  function onClick(event) {
+    console.log(event.target.name);
+  }
+
+  function onDelete(event) {
+    const id = event.target.name;
+    const url = "https://hunterknappwedding.herokuapp.com/rsvp/"+id;
+    axios.delete(url)
+    .then( res => {
+      console.log(res);
+    })
+    .catch( err => {
+      console.log( err );
+    });
+  }
+
   return (
     <li className="list-item">
       <div className="row-display sub-list">
@@ -51,8 +70,8 @@ function ListItem(props) {
           </ul>
         </div>
         <div className="controls nested-list">
-          <img src={pencil} value={props.id} alt="Edit" />
-          <img src={trash} value={props.id} alt="Delete" />
+          <img src={pencil} name={props.id} onClick={onClick} alt="Edit" />
+          <img src={trash} name={props.id} onClick={onDelete} alt="Delete" />
         </div>
       </div>
     </li>

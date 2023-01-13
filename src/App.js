@@ -22,8 +22,8 @@ function App() {
                 radioAnswers={entry.radioAnswers}
                 index={index}
                 id={entry._id}
+                key={entry._id}
                 />);
-
       });
       setListArr(elemArr);
     })
@@ -35,30 +35,38 @@ function App() {
   return (
     <div className="App">
       <div className="db-render-pane">
-        <ul className="main-list">
-        <li className="list-header list-item">
-          <div className="row-display sub-list">
-            <div className="names">
-              <ul className="name-list nested-list">
-                <p>Guest Names</p>
-              </ul>
+
+        <div className="main-display">
+          <ul className="main-list">
+          <li className="list-header list-item">
+            <div className="row-display sub-list">
+              <div className="names">
+                <ul className="name-list nested-list">
+                  <p>Guest Names</p>
+                </ul>
+              </div>
+              <div className="attendance-display center nested-list">
+                <p>Attending</p>
+              </div>
+              <div className="responses">
+                <ul className="response-list nested-list">
+                  <p>Responses</p>
+                </ul>
+              </div>
+              <div className="control-header nested-list">
+                <p>Edit / Delete</p>
+              </div>
             </div>
-            <div className="attendance-display center nested-list">
-              <p>Attending</p>
-            </div>
-            <div className="responses">
-              <ul className="response-list nested-list">
-                <p>Responses</p>
-              </ul>
-            </div>
-            <div className="control-header nested-list">
-              <p>Edit / Delete</p>
-            </div>
-          </div>
-        </li>
-          {listArr}
-        </ul>
-        {<button onClick={getRSVPs}>GetRSVPs</button>}
+          </li>
+            {listArr}
+          </ul>
+          <button onClick={getRSVPs}>GetRSVPs</button>
+        </div>
+
+        <div className="edit-display">
+
+        </div>
+
       </div>
     </div>
   );
