@@ -64,7 +64,12 @@ function App() {
         </div>
 
         <div className="edit-display">
-
+          {/*
+            Party Name - Guest Names Array entry 0 a.k.a. the "head" guest
+            Num of Guest / Guest Names - Dynamic textfields with a stored state of the original names so they are not lost if the textfields is brought below the original number
+            Attending - Boolean switch
+            radioAnswers - radioAnswers from the weddingSite repo
+            */}
         </div>
 
       </div>
