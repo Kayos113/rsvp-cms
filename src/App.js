@@ -20,6 +20,7 @@ function App() {
         elemArr.push(<ListItem
                 names={entry.names}
                 radioAnswers={entry.radioAnswers}
+                numOfGuests={entry.numOfGuests}
                 index={index}
                 id={entry._id}
                 key={entry._id}
@@ -38,7 +39,7 @@ function App() {
 
         <div className="main-display">
           <ul className="main-list">
-          <li className="list-header list-item">
+          {/*<li className="list-header list-item">
             <div className="row-display sub-list">
               <div className="names">
                 <ul className="name-list nested-list">
@@ -57,8 +58,8 @@ function App() {
                 <p>Edit / Delete</p>
               </div>
             </div>
-          </li>
-            {listArr}
+          </li>*/}
+          {listArr}
           </ul>
           <button onClick={getRSVPs}>GetRSVPs</button>
         </div>

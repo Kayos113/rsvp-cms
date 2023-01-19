@@ -9,11 +9,12 @@
 }
 .list-item {
   margin: 0 auto;
-  width: 50%;
+  width: min(75%, 900px);
   background: var(--ch-beige);
 }
 .sub-list {
   border: 1px solid var(--ch-mauve);
+  border-top: 0;
   display: grid;
   grid-template-columns: 2fr 1fr 2fr 1fr;
 }
@@ -24,9 +25,8 @@
 }
 
 .nested-list {
-  border-left: 1px solid var(--ch-mauve);
   display: inline-block;
-  width: 100%;
+  min-width: 100%;
 }
 .nested-list>li {
   padding: 1rem 4rem;
@@ -58,7 +58,13 @@ img.cross {
   max-width: 3rem;
   margin: 25% 0;
 }
+.attendance-display>.slider {
+}
 
 .name-list {
 
+}
+
+.border {
+  border-left: 1px solid var(--ch-mauve);
 }
