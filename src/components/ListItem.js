@@ -12,11 +12,10 @@ import "./css/ListItem.css";
 
 function ListItem(props) {
 
-  let tempNameHolder = props.names;
   const [arrowState, setArrowState] = useState(false);
   const [editState, setEditState] = useState(false);
   const [attendanceState, setAttendanceState] = useState(parseAttendance());
-  const [nameArr, setNameArr] = useState(tempNameHolder);
+  const [nameArr, setNameArr] = useState([...props.names]); //use a shallow copy to not overwrite props accidentally
   const id = props.id;
 
   function parseAttendance() {
@@ -80,7 +79,7 @@ function ListItem(props) {
 
   function onTextInput(event) {
     const { id, value } = event.target;
-    let tempArr = [...nameArr];
+    let tempArr = [...nameArr]; // Make a shallow copy
     tempArr[id] = value;
     setNameArr(tempArr);
   }
