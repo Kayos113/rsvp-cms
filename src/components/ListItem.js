@@ -19,7 +19,7 @@ function ListItem(props) {
   const id = props.id;
 
   function parseAttendance() {
-    if(props.radioAnswers[0].value==="Graciously Attend") {
+    if(props.attending) {
       return true;
     }
     return false;
@@ -55,8 +55,8 @@ function ListItem(props) {
   }
 
   function onCancel(event) {
-    setAttendanceState(parseAttendance());
     setNameArr(props.names);
+    setAttendanceState(parseAttendance());
     onEdit(event);
   }
 

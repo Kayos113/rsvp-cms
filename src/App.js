@@ -19,6 +19,7 @@ function App() {
       data.forEach( (entry, index) => {
         elemArr.push(<ListItem
                 names={entry.names}
+                attending={entry.attending}
                 radioAnswers={entry.radioAnswers}
                 numOfGuests={entry.numOfGuests}
                 index={index}
