@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import MainControls from "./MainControls";
+import EditControls from "./EditControls"
+
 import check from "../images/check.png";
 import cross from "../images/delete-button.png";
-import pencil from "../images/pencil.png";
-import trash from "../images/bin.png";
 import arrow from "../images/downward-arrow.png";
 
 import axios from "axios";
@@ -11,9 +12,11 @@ import "./css/ListItem.css";
 
 function ListItem(props) {
 
+  let tempNameHolder = props.names;
   const [arrowState, setArrowState] = useState(false);
   const [editState, setEditState] = useState(false);
   const [attendanceState, setAttendanceState] = useState(parseAttendance());
+  const [nameArr, setNameArr] = useState(tempNameHolder);
   const id = props.id;
 
   function parseAttendance() {
@@ -24,12 +27,16 @@ function ListItem(props) {
   }
 
   function nameList() {
-    let nameArr = [];
-    props.names.forEach( (name, index) => {
-      let elem = ( editState ? <li key={"name-edit"+props.index+index}><input type="text" placeholder={name} /></li> : <li key={"name"+props.index+index}><p className="name-display">{name}</p></li> );
-      nameArr.push(elem);
+    let elemArr = [];
+    nameArr.forEach( (name, index) => {
+      let elem = (
+        editState ?
+        <li key={"name-edit"+props.index+index}><input type="text" id={index} placeholder={name} onChange={onTextInput}/></li> :
+        <li key={"name"+props.index+index}><p className="name-display">{name}</p></li>
+      );
+      elemArr.push(elem);
     });
-    return nameArr;
+    return elemArr;
   }
 
   function responseList() {
@@ -43,9 +50,21 @@ function ListItem(props) {
     });
     return responseArr;
   }
-  
+
   function onEdit(event) {
     setEditState(!editState);
+  }
+
+  function onCancel(event) {
+    setAttendanceState(parseAttendance());
+    setNameArr(props.names);
+    onEdit(event);
+  }
+
+  function onSave(event) {
+    console.log(event.target.name);
+
+    onEdit(event);
   }
 
   function onDelete(event) {
@@ -57,6 +76,13 @@ function ListItem(props) {
     .catch( err => {
       console.log( err );
     });
+  }
+
+  function onTextInput(event) {
+    const { id, value } = event.target;
+    let tempArr = [...nameArr];
+    tempArr[id] = value;
+    setNameArr(tempArr);
   }
 
   function partyControlClick(event) {
@@ -87,7 +113,7 @@ function ListItem(props) {
                 <img src={ attendanceState ? check : cross} alt=""/>
               </div>
             </div> : // False - Not Editing
-            <img src={ parseAttendance() ? check : cross } className={ parseAttendance() ? "check" : "cross" } alt={ parseAttendance() ? "YES" : "NO"} />
+            <img src={ attendanceState ? check : cross } className={ attendanceState ? "check" : "cross" } alt={ attendanceState ? "YES" : "NO"} />
           //END OF ATTENDANCE
         }
         </div>
@@ -96,10 +122,11 @@ function ListItem(props) {
             {responseList()}
           </ul>
         </div>
-        <div className="controls nested-list border">
-          <img src={pencil} name={id} onClick={onEdit} alt="Edit" />
-          <img src={trash} name={id} onClick={onDelete} alt="Delete" />
-        </div>
+        {
+        editState ?
+        <EditControls id={id} onSave={onSave} onCancel={onCancel} /> :
+        <MainControls id={id} onEdit={onEdit} onDelete={onDelete} />
+        }
       </div>
     </li>
   )
