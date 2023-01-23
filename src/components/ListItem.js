@@ -55,13 +55,33 @@ function ListItem(props) {
   }
 
   function onCancel(event) {
-    setNameArr(props.names);
+    setNameArr([...props.names]);
     setAttendanceState(parseAttendance());
     onEdit(event);
   }
 
   function onSave(event) {
     console.log(event.target.name);
+    const url = "https://hunterknappwedding.herokuapp.com/rsvp/"+id
+
+    let data = {};
+    if(attendanceState!==props.attending) {
+      data['attending']=attendanceState;
+    }
+    nameArr.forEach( (name,index) => {
+      if(name!==props.names[index]) {
+        data['names']=nameArr;
+      }
+    })
+    console.log(data);
+
+    axios.patch(url, data)
+    .then( res => {
+      console.log(res);
+    })
+    .catch( err => {
+      console.log(err);
+    });
 
     onEdit(event);
   }
