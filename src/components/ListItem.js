@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import MainControls from "./MainControls";
-import EditControls from "./EditControls"
+import EditControls from "./EditControls";
+import DeleteControls from "./DeleteControls";
 
 import check from "../images/check.png";
 import cross from "../images/delete-button.png";
@@ -14,6 +15,7 @@ function ListItem(props) {
 
   const [arrowState, setArrowState] = useState(false);
   const [editState, setEditState] = useState(false);
+  const [deleteState, setDeleteState] = useState(false);
   const [attendanceState, setAttendanceState] = useState(parseAttendance());
   const [nameArr, setNameArr] = useState([...props.names]); //use a shallow copy to not overwrite props accidentally
   const id = props.id;
@@ -51,13 +53,14 @@ function ListItem(props) {
   }
 
   function onEdit(event) {
-    setEditState(!editState);
+    setEditState(true);
   }
 
   function onCancel(event) {
     setNameArr([...props.names]);
     setAttendanceState(parseAttendance());
-    onEdit(event);
+    setEditState(false);
+    setDeleteState(false);
   }
 
   function onSave(event) {
@@ -87,6 +90,10 @@ function ListItem(props) {
   }
 
   function onDelete(event) {
+    setDeleteState(true);
+  }
+
+  function onConfirm(event) {
     const url = "https://hunterknappwedding.herokuapp.com/rsvp/"+id;
     axios.delete(url)
     .then( res => {
@@ -144,7 +151,11 @@ function ListItem(props) {
         {
         editState ?
         <EditControls id={id} onSave={onSave} onCancel={onCancel} /> :
-        <MainControls id={id} onEdit={onEdit} onDelete={onDelete} />
+        (
+          deleteState ?
+          <DeleteControls id={id} onConfirm={onConfirm} onCancel={onCancel} /> :
+          <MainControls id={id} onEdit={onEdit} onDelete={onDelete} />
+        )
         }
       </div>
     </li>
